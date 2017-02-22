@@ -1,0 +1,29 @@
+{
+  "name": "lambda-nexmo-balance",
+  "version": "0.0.0",
+  "description": "AWS Lambda function to send Nexmo credit balance to AWS CloudWatch",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jbuck/lambda-nexmo-balance.git"
+  },
+  "keywords": [
+    "aws",
+    "lambda",
+    "cloudwatch",
+    "nexmo"
+  ],
+  "author": "Jon Buckley <jon@jbuckley.ca>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/jbuck/lambda-nexmo-balance/issues"
+  },
+  "homepage": "https://github.com/jbuck/lambda-nexmo-balance#readme",
+  "dependencies": {
+    "aws-sdk": "^2.17.0",
+    "nexmo": "^1.2.0"
+  }
+}
