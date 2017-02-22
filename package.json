@@ -1,6 +1,6 @@
 {
   "name": "lambda-nexmo-balance",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "AWS Lambda function to send Nexmo credit balance to AWS CloudWatch",
   "main": "index.js",
   "scripts": {
