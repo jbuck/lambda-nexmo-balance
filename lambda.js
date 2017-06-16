@@ -8,15 +8,39 @@ if (!process.env.NEXMO_API_KEY || !process.env.NEXMO_API_SECRET) {
 }
 
 var AWS = require("aws-sdk");
-var cw = new AWS.CloudWatch();
-var Nexmo = require("nexmo");
-var nexmo = new Nexmo({
-  apiKey: process.env.NEXMO_API_KEY,
-  apiSecret: process.env.NEXMO_API_SECRET
-});
+var cw = new AWS.CloudWatch({ region: 'us-west-2' });
+var https = require("https");
+
+var checkBalance = (cb) => {
+  var req = https.request({
+    hostname: "rest.nexmo.com",
+    path: "/account/get-balance/" + process.env.NEXMO_API_KEY + "/" + process.env.NEXMO_API_SECRET,
+    headers: {
+      "Accept": "application/json"
+    }
+  }).on("response", (res) => {
+    var data = "";
+    res.setEncoding('utf8');
+    res.on("data", (chunk) => { data += chunk; });
+    res.on("end", () => {
+      var json;
+
+      try {
+        json = JSON.parse(data);
+      } catch (ex) {
+        return cb(ex);
+      }
+
+      cb(null, json);
+    });
+  }).on("error", (err) => {
+    cb(err);
+  });
+  req.end();
+};
 
 module.exports.handler = (event, context, callback) => {
-  nexmo.account.checkBalance((err, balance) => {
+  checkBalance((err, balance) => {
     if (err) {
       return callback(err);
     }
@@ -44,3 +68,11 @@ module.exports.handler = (event, context, callback) => {
     });
   });
 };
+
+if (require.main == module) {
+  module.exports.handler(null, null, (err, balance) => {
+    console.log("Account: ", account_name);
+    console.log("Error: ", err);
+    console.log("Balance: ", balance);
+  });
+}

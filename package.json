@@ -23,7 +23,6 @@
   },
   "homepage": "https://github.com/jbuck/lambda-nexmo-balance#readme",
   "dependencies": {
-    "aws-sdk": "^2.17.0",
-    "nexmo": "^1.2.0"
+    "aws-sdk": "^2.17.0"
   }
 }
